@@ -44,10 +44,7 @@
 </head>
 <body>
     <script>
-   document.addEventListener('mousemove', function(event) {
-    const x = event.clientX;
-    const y = event.clientY;
-
+   function createTextElement(x, y) {
     const textElement = document.createElement('div');
     textElement.textContent = '16:9';
     textElement.className = 'text';
@@ -61,6 +58,19 @@
     });
 
     document.body.appendChild(textElement);
+}
+
+document.addEventListener('mousemove', function(event) {
+    const x = event.clientX;
+    const y = event.clientY;
+    createTextElement(x, y);
+});
+
+document.addEventListener('touchmove', function(event) {
+    const touch = event.touches[0];
+    const x = touch.clientX;
+    const y = touch.clientY;
+    createTextElement(x, y);
 });
 
 document.addEventListener('click', function() {
@@ -69,6 +79,14 @@ document.addEventListener('click', function() {
         element.remove();
     });
 });
+
+document.addEventListener('touchstart', function() {
+    const textElements = document.querySelectorAll('.text');
+    textElements.forEach(function(element) {
+        element.remove();
+    });
+});
+
 
     </script>
 </body>
