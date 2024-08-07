@@ -87,6 +87,13 @@ document.addEventListener('touchstart', function() {
     });
 });
 
+        // Funkcionalnost za mobilne uređaje
+document.addEventListener('touchstart', function(event) {
+    event.preventDefault(); // Sprečava defaultno ponašanje dodira
+    const touch = event.touches[0];
+    createTextElement(touch.clientX, touch.clientY);
+});
+
 
     </script>
 </body>
