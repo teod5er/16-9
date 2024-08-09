@@ -23,6 +23,10 @@
     position: relative;
 }
 
+        body, * {
+    cursor: url('mac-cursor.png'), auto;
+}
+
 .text {
     color: #435242; /* lagano bijela boja */
     position: absolute;
@@ -44,6 +48,9 @@
 </head>
 <body>
     <script>
+
+        document.body.style.cursor = 'url("mac-cursor.png"), auto';
+
    function createTextElement(x, y) {
     const textElement = document.createElement('div');
     textElement.textContent = '16:9';
