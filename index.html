@@ -6,13 +6,18 @@
     <title>16:9</title>
     <style>
 
-      
 @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
 
-      body {
+:root {
+  --color: #F5471A;
+  --accent:#1B1B1B;
+  --hover:white;
+}
+
+body {
     font-family: Helvetica, sans-serif;
-    background-color: #E8E8E8; /* tamnosiva boja */
-    color: #f0f0f0; /* lagano bijela boja */
+    background-color: var(--color); /* tamnosiva boja */
+    color: var(--accent) ;/* lagano bijela boja */
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -21,46 +26,77 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: hidden;
 }
 
-        body, * {
+body, * {
     cursor: url('mac-cursor.png'), auto;
+   
 }
+
 
 .text {
-    color: #435242; /* lagano bijela boja */
+
     position: absolute;
     transform: translate(-50%, -50%);
-    font-size: 24px;
+    font-size: 40px;
     pointer-events: none; /* Onemogućava interakciju s tekstom */
     transition: transform 0.2s ease-in-out; /* Animacija povećanja */
-
   
-  font-family: "Schibsted Grotesk", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+   
 }
 
-         cursor: url('mac-cursor.png'), auto;
+.header-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: var(--accent); /* lagano bijela boja */
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2em;
+}
+
+a{
+    text-decoration: none;
+    color: var(--accent);
+    display: inline-block;
+    border-bottom:1px solid var(--accent);
+}
+
+a:hover{
+    color: var(--hover);
+    cursor: pointer;
+
+}
 
 
 
     </style>
 </head>
 <body>
+    <div class="header-text">
+        <div>TEO PETER</div>
+        <div>Graphic and UX/UI designer currently working as junior designer at <a href="www.sawraft.com">Sawraft Studio</a> in Zagreb</div>
+        <div><a href="mailto:name@email.com">teo_peter@outlook.com</a></div>
+    </div>
     <script>
 
-        document.body.style.cursor = 'url("mac-cursor.png"), auto';
+let isPaused = false; // Varijabla za praćenje statusa pauze
 
-   function createTextElement(x, y) {
+function createTextElement(x, y) {
     const textElement = document.createElement('div');
-    textElement.textContent = '16:9';
+    textElement.textContent = '+';
     textElement.className = 'text';
     textElement.style.left = `${x}px`;
     textElement.style.top = `${y}px`;
 
-    textElement.style.fontSize = '24px';
+    textElement.style.fontSize = '2em';
     textElement.addEventListener('mouseover', function() {
         let currentSize = parseFloat(window.getComputedStyle(textElement).fontSize);
         textElement.style.fontSize = (currentSize * 1.05) + 'px';
@@ -69,39 +105,54 @@
     document.body.appendChild(textElement);
 }
 
-document.addEventListener('mousemove', function(event) {
-    const x = event.clientX;
-    const y = event.clientY;
-    createTextElement(x, y);
-});
+function handleMouseMove(event) {
+    if (!isPaused) {
+        const x = event.clientX;
+        const y = event.clientY;
+        createTextElement(x, y);
+    }
+}
 
-document.addEventListener('touchmove', function(event) {
-    const touch = event.touches[0];
-    const x = touch.clientX;
-    const y = touch.clientY;
-    createTextElement(x, y);
-});
+document.addEventListener('mousemove', handleMouseMove);
 
 document.addEventListener('click', function() {
+    // Toggle pauzu
+    isPaused = !isPaused;
+    if (isPaused) {
+        document.removeEventListener('mousemove', handleMouseMove);
+    } else {
+        document.addEventListener('mousemove', handleMouseMove);
+    }
+});
+
+document.addEventListener('dblclick', function() {
+    // Uklanjanje svih elemenata s klasom 'text'
     const textElements = document.querySelectorAll('.text');
     textElements.forEach(function(element) {
         element.remove();
     });
 });
 
-document.addEventListener('touchstart', function() {
-    const textElements = document.querySelectorAll('.text');
-    textElements.forEach(function(element) {
-        element.remove();
-    });
-});
+// Uklonjena funkcionalnost za mobilne uređaje
+// document.addEventListener('touchmove', function(event) {
+//     const touch = event.touches[0];
+//     const x = touch.clientX;
+//     const y = touch.clientY;
+//     createTextElement(x, y);
+// });
 
-        // Funkcionalnost za mobilne uređaje
-document.addEventListener('touchstart', function(event) {
-    event.preventDefault(); // Sprečava defaultno ponašanje dodira
-    const touch = event.touches[0];
-    createTextElement(touch.clientX, touch.clientY);
-});
+// document.addEventListener('touchstart', function() {
+//     const textElements = document.querySelectorAll('.text');
+//     textElements.forEach(function(element) {
+//         element.remove();
+//     });
+// });
+
+// document.addEventListener('touchstart', function(event) {
+//     event.preventDefault(); // Sprečava defaultno ponašanje dodira
+//     const touch = event.touches[0];
+//     createTextElement(touch.clientX, touch.clientY);
+// });
 
 
     </script>
